@@ -1,103 +1,153 @@
-# Representa o tabuleiro
-tabuleiro = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
-# Armazena o número de jogadas, serve para ver em quantas
-# jogadas um jogador venceu ou para definir o empate
-jogadas = 0
+# jogo da velha
+# versão 0.2
+# autor: Alexandre Frey
+# Descrição: jogo simples para treinar python
 
+import random  # para gerar numeros aleatorios
 
+# Início da função exibe.
 # Exibe o tabuleiro na tela.
-def exibe():
-    print('-------------')
-    print('| {} | {} | {} |'.format(tabuleiro[0], tabuleiro[1], tabuleiro[2]))
-    print('| {} | {} | {} |'.format(tabuleiro[3], tabuleiro[4], tabuleiro[5]))
-    print('| {} | {} | {} |'.format(tabuleiro[6], tabuleiro[7], tabuleiro[8]))
-    print('-------------')
+def exibe(tabuleiro):
+    print('┌───┬───┬───┐')
+    print('│ {} │ {} │ {} │'.format(tabuleiro[1], tabuleiro[2], tabuleiro[3]))
+    print('├───┼───┼───┤')
+    print('│ {} │ {} │ {} │'.format(tabuleiro[4], tabuleiro[5], tabuleiro[6]))
+    print('├───┼───┼───┤')
+    print('│ {} │ {} │ {} │'.format(tabuleiro[7], tabuleiro[8], tabuleiro[9]))
+    print('└───┴───┴───┘')
+# Final da função exibe.
 
 
+# Início da função joga.
 # Pede a posição para jogar. Caso esteja vazia coloca o caractere correspondente
 # ao jogador na posição. Caso não esteja informa e pede novamente a posição para jogar.
-def joga(jogador):
+def joga_humano(tabuleiro, jogador):
     while True:
-        jogada = int(input('Jogador {} >>  '.format(jogador)))
-        if tabuleiro[jogada] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8']:
+        try:
+            jogada = int(input('Jogador {} informe a posição para jogar: '.format(jogador)))
+            if jogada not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                print('Por favor informe uma das posições válidas listadas no tabuleiro!')
+                continue
+        except:
+            print('Por favor informe uma das posições válidas listadas no tabuleiro!')
+            continue
+
+        if tabuleiro[jogada] not in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
             print('Essa posição não está vazia! Tente novamente!')
             continue
         else:
             tabuleiro[jogada] = jogador
-            return
+            break
+# Final da função joga.
 
 
-# verifica se alguem venceu
-def vencedor():
+# Início da função joga_computador.
+# Nessa função o computador joga de forma aleatória em um espaço livre.
+def joga_computador(tabuleiro, jogador):
+    vagas = []
+    i = len(tabuleiro)
+    for i in range(1, i, 1):
+        if tabuleiro[i] in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            vagas.append(i)
+
+    jogada = random.choice(vagas)
+    tabuleiro[jogada] = jogador
+    print('O jogador {} (computador) jogou na posição: {}'.format(jogador, jogada))
+# Final da função joga_computador.
+
+
+# Inicio da função vencedor, verifica se alguém venceu
+def vencedor(tabuleiro):
     # horizontais
-    if tabuleiro[0] == 'x' and tabuleiro[1] == 'x' and tabuleiro[2] == 'x':
+    if tabuleiro[1] == tabuleiro[2] == tabuleiro[3] not in ['1', '2', '3']:
         return True
-    elif tabuleiro[3] == 'x' and tabuleiro[4] == 'x' and tabuleiro[5] == 'x':
+    elif tabuleiro[4] == tabuleiro[5] == tabuleiro[6] not in ['4', '5', '6']:
         return True
-    elif tabuleiro[6] == 'x' and tabuleiro[7] == 'x' and tabuleiro[8] == 'x':
-        return True
-    elif tabuleiro[0] == 'o' and tabuleiro[1] == 'o' and tabuleiro[2] == 'o':
-        return True
-    elif tabuleiro[3] == 'o' and tabuleiro[4] == 'o' and tabuleiro[5] == 'o':
-        return True
-    elif tabuleiro[6] == 'o' and tabuleiro[7] == 'o' and tabuleiro[8] == 'o':
+    elif tabuleiro[7] == tabuleiro[8] == tabuleiro[9] not in ['7', '8', '9']:
         return True
     # verticais
-    elif tabuleiro[0] == 'x' and tabuleiro[3] == 'x' and tabuleiro[6] == 'x':
+    elif tabuleiro[1] == tabuleiro[4] == tabuleiro[7] not in ['1', '4', '7']:
         return True
-    elif tabuleiro[1] == 'x' and tabuleiro[4] == 'x' and tabuleiro[7] == 'x':
+    elif tabuleiro[2] == tabuleiro[5] == tabuleiro[8] not in ['2', '5', '8']:
         return True
-    elif tabuleiro[2] == 'x' and tabuleiro[5] == 'x' and tabuleiro[8] == 'x':
-        return True
-    elif tabuleiro[0] == 'o' and tabuleiro[3] == 'o' and tabuleiro[6] == 'o':
-        return True
-    elif tabuleiro[1] == 'o' and tabuleiro[4] == 'o' and tabuleiro[7] == 'o':
-        return True
-    elif tabuleiro[2] == 'o' and tabuleiro[5] == 'o' and tabuleiro[8] == 'o':
+    elif tabuleiro[3] == tabuleiro[6] == tabuleiro[9] not in ['3', '6', '9']:
         return True
     # diagonais
-    elif tabuleiro[0] == 'x' and tabuleiro[4] == 'x' and tabuleiro[8] == 'x':
+    elif tabuleiro[1] == tabuleiro[5] == tabuleiro[9] not in ['1', '5', '9']:
         return True
-    elif tabuleiro[2] == 'x' and tabuleiro[4] == 'x' and tabuleiro[6] == 'x':
+    elif tabuleiro[3] == tabuleiro[5] == tabuleiro[7] not in ['3', '5', '7']:
         return True
-    elif tabuleiro[0] == 'o' and tabuleiro[4] == 'o' and tabuleiro[8] == 'o':
-        return True
-    elif tabuleiro[2] == 'o' and tabuleiro[4] == 'o' and tabuleiro[6] == 'o':
-        return True
+# Final da função vencedor
 
 
-# Verifica se foi empate
-def empate():
-    if not vencedor() and jogadas == 9:  # se não teve vencedor e ja foram 9 jogadas
+# Início da função empate.
+def empate(tabuleiro, rodadas):
+    if not vencedor(tabuleiro) and rodadas == 9:  # se não teve vencedor e ja foram 9 rodadas
         return True  # retorna True que foi empate
     else:
         return False
+# Final da função empate.
 
 
-# joga computador
-# def joga_computador():
+# Início da função jogando.
+def jogando(modo):
+    tabuleiro = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    rodadas = 0
+
+    if rodadas == 0:
+        print('Início do jogo.')
+
+    if modo == 'H':
+        print('Jogando Humano vs. Humano')
+    elif modo == 'C':
+        print('Jogando Computador vs. Humano')
+
+    exibe(tabuleiro)
+
+    while True:
+        # joga o X
+
+        if modo == 'H':
+            joga_humano(tabuleiro, 'X')
+        elif modo == 'C':
+            joga_computador(tabuleiro, 'X')
+
+        rodadas += 1
+        exibe(tabuleiro)
+        if vencedor(tabuleiro):
+            print('O jogador X venceu com {} rodadas.' .format(rodadas))
+            break
+        elif empate(tabuleiro, rodadas):
+            print('Empate! Acabaram as 9 rodadas e ninguém ganhou!')
+            break
+
+        # joga o O
+        joga_humano(tabuleiro, 'O')
+        rodadas += 1
+        exibe(tabuleiro)
+        if vencedor(tabuleiro):
+            print('O jogador O venceu com {} rodadas.' .format(rodadas))
+            break
+        elif empate(tabuleiro, rodadas):
+            print('Empate!')
+            break
+# Final da função jogando.
 
 
-# programa principal
-exibe()
+# Inicio do programa principal
+print('***** Bem vindo ao jogo da velha *****')
 while True:
-    # joga o X
-    joga('x')
-    jogadas += 1
-    exibe()
-    if vencedor():
-        print('O jogador *x* venceu com {} jogadas.' .format(jogadas))
+    print('Escolha o modo de jogo:')
+    print('H. Humano vs. Humano')
+    print('C. Computador vs. Humano')
+    print('S. Sair')
+    opcao = input('>> ')
+    opcao = opcao.upper()
+    if opcao == 'H':
+        jogando('H')
+    elif opcao == 'C':
+        jogando('C')
+    elif opcao == 'S':
+        print('Saindo...')
         break
-    elif empate():
-        print('Empate! Acabaram as 9 jogadas e ninguém ganhou!')
-        break
-    # joga o O
-    joga('o')
-    jogadas += 1
-    exibe()
-    if vencedor():
-        print('O jogador *o* venceu com {} jogadas.' .format(jogadas))
-        break
-    elif empate():
-        print('Empate!')
-        break
+# Final do programa principal
