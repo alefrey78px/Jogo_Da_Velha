@@ -59,23 +59,23 @@ def joga_computador(tabuleiro, jogador):
 # Inicio da função vencedor, verifica se alguém venceu
 def vencedor(tabuleiro):
     # horizontais
-    if tabuleiro[1] == tabuleiro[2] == tabuleiro[3] not in ['1', '2', '3']:
+    if tabuleiro[1] == tabuleiro[2] == tabuleiro[3]:
         return True
-    elif tabuleiro[4] == tabuleiro[5] == tabuleiro[6] not in ['4', '5', '6']:
+    elif tabuleiro[4] == tabuleiro[5] == tabuleiro[6]:
         return True
-    elif tabuleiro[7] == tabuleiro[8] == tabuleiro[9] not in ['7', '8', '9']:
+    elif tabuleiro[7] == tabuleiro[8] == tabuleiro[9]:
         return True
     # verticais
-    elif tabuleiro[1] == tabuleiro[4] == tabuleiro[7] not in ['1', '4', '7']:
+    elif tabuleiro[1] == tabuleiro[4] == tabuleiro[7]:
         return True
-    elif tabuleiro[2] == tabuleiro[5] == tabuleiro[8] not in ['2', '5', '8']:
+    elif tabuleiro[2] == tabuleiro[5] == tabuleiro[8]:
         return True
-    elif tabuleiro[3] == tabuleiro[6] == tabuleiro[9] not in ['3', '6', '9']:
+    elif tabuleiro[3] == tabuleiro[6] == tabuleiro[9]:
         return True
     # diagonais
-    elif tabuleiro[1] == tabuleiro[5] == tabuleiro[9] not in ['1', '5', '9']:
+    elif tabuleiro[1] == tabuleiro[5] == tabuleiro[9]:
         return True
-    elif tabuleiro[3] == tabuleiro[5] == tabuleiro[7] not in ['3', '5', '7']:
+    elif tabuleiro[3] == tabuleiro[5] == tabuleiro[7]:
         return True
 # Final da função vencedor
 
